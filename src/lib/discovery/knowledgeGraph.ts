@@ -148,8 +148,17 @@ const graphData: KnowledgeGraphData = {
       category: 'meta',
       description: 'You found the deep game.',
       requires: ['star:first-click', 'terminal:first-command', 'game:star-catcher'],
-      unlocks: [],
+      unlocks: ['game:deep-complete'],
       hint: 'There is more beyond what you see.',
+    },
+    {
+      id: 'game:deep-complete',
+      label: 'Deep Explorer',
+      category: 'game',
+      description: 'You completed the deep game.',
+      requires: ['meta:deep-game'],
+      unlocks: [],
+      hint: 'Finish what you started in the deep.',
     },
   ],
 };

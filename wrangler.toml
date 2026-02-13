@@ -1,5 +1,5 @@
 name = "the-observatory"
-compatibility_date = "2025-01-01"
+compatibility_date = "2026-02-13"
 
-[site]
-bucket = "./dist"
+[assets]
+directory = "./dist"

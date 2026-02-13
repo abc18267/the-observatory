@@ -80,6 +80,20 @@ const links = [
           </a>
         </li>
       ))}
+      <!-- Ship Log link - hidden until first discovery -->
+      <li id="ship-log-link-mobile" class="hidden">
+        <a
+          href="/ship-log"
+          class:list={[
+            'block rounded-md px-3 py-2 text-sm font-medium transition-colors',
+            currentPath === '/ship-log'
+              ? 'bg-nebula-800 text-discovery'
+              : 'text-discovery/60 hover:bg-nebula-800 hover:text-discovery',
+          ]}
+        >
+          Ship Log
+        </a>
+      </li>
     </ul>
   </div>
 </nav>
@@ -102,6 +116,7 @@ const links = [
         const state = JSON.parse(raw);
         if (state.discoveries && state.discoveries.length > 0) {
           document.getElementById('ship-log-link')?.classList.remove('hidden');
+          document.getElementById('ship-log-link-mobile')?.classList.remove('hidden');
         }
       }
     } catch {

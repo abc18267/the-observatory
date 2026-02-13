@@ -193,6 +193,7 @@
           if (!clickedStarIds.has(starId)) {
             clickedStarIds.add(starId);
             clickStar();
+            window.dispatchEvent(new CustomEvent('observatory:star-click'));
 
             // Brighten the glow
             const glow = constellationGlows.get(starId);

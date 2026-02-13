@@ -10,11 +10,11 @@
   let gameName = $derived(formatGameName(gameId));
 
   function formatGameName(id: string): string {
-    // Convert camelCase to Title Case (e.g. "starCatcher" -> "Star Catcher")
+    // Convert kebab-case to Title Case (e.g. "star-catcher" -> "Star Catcher")
     return id
-      .replace(/([A-Z])/g, ' $1')
-      .replace(/^./, (s) => s.toUpperCase())
-      .trim();
+      .split('-')
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(' ');
   }
 
   type GameModule = {
@@ -25,10 +25,10 @@
   };
 
   const gameModules: Record<string, () => Promise<GameModule>> = {
-    starCatcher: () => import('../../lib/games/littlejs/starCatcher.ts'),
-    signalDecoder: () => import('../../lib/games/littlejs/signalDecoder.ts'),
-    gravityHop: () => import('../../lib/games/littlejs/gravityHop.ts'),
-    nebulaPainter: () => import('../../lib/games/littlejs/nebulaPainter.ts'),
+    'star-catcher': () => import('../../lib/games/littlejs/starCatcher.ts'),
+    'signal-decoder': () => import('../../lib/games/littlejs/signalDecoder.ts'),
+    'gravity-hop': () => import('../../lib/games/littlejs/gravityHop.ts'),
+    'nebula-painter': () => import('../../lib/games/littlejs/nebulaPainter.ts'),
   };
 
   async function handleComplete(score: number) {
