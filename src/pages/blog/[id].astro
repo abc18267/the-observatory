@@ -1,0 +1,41 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { id: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<PageLayout title={post.data.title} description={post.data.description}>
+  <article class="py-16">
+    <a href="/blog" class="mb-8 inline-block text-sm text-nebula-500 transition-colors hover:text-star-blue">
+      &larr; All Posts
+    </a>
+
+    <header class="mb-12">
+      <div class="mb-4 flex flex-wrap gap-2">
+        {post.data.tags.map((tag) => (
+          <span class="rounded-full bg-nebula-800 px-3 py-1 text-xs text-nebula-400">{tag}</span>
+        ))}
+      </div>
+      <h1 class="font-display text-4xl font-bold text-nebula-50 md:text-5xl">
+        {post.data.title}
+      </h1>
+      <time class="mt-4 block text-sm text-nebula-500" datetime={post.data.date.toISOString()}>
+        {post.data.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+      </time>
+    </header>
+
+    <div class="prose prose-invert max-w-3xl prose-headings:font-display prose-headings:text-nebula-100 prose-p:text-nebula-300 prose-a:text-star-blue">
+      <Content />
+    </div>
+  </article>
+</PageLayout>

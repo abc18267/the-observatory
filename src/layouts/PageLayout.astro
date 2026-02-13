@@ -1,0 +1,22 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Nav from '../components/surface/Nav.astro';
+import Footer from '../components/surface/Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="flex min-h-dvh flex-col">
+    <Nav />
+    <main class="mx-auto w-full max-w-6xl flex-1 px-[var(--spacing-page)] pt-24 pb-16">
+      <slot />
+    </main>
+    <Footer />
+  </div>
+</BaseLayout>

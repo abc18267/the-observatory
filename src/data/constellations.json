@@ -1,0 +1,61 @@
+{
+  "constellations": [
+    {
+      "name": "orion",
+      "label": "Orion",
+      "stars": [
+        { "id": "orion-1", "x": 0.42, "y": 0.35, "size": 1.5 },
+        { "id": "orion-2", "x": 0.45, "y": 0.40, "size": 1.2 },
+        { "id": "orion-3", "x": 0.48, "y": 0.45, "size": 1.4 },
+        { "id": "orion-4", "x": 0.40, "y": 0.50, "size": 1.0 },
+        { "id": "orion-5", "x": 0.50, "y": 0.50, "size": 1.0 },
+        { "id": "orion-6", "x": 0.38, "y": 0.60, "size": 1.3 },
+        { "id": "orion-7", "x": 0.52, "y": 0.60, "size": 1.3 }
+      ],
+      "connections": [
+        ["orion-1", "orion-2"],
+        ["orion-2", "orion-3"],
+        ["orion-4", "orion-5"],
+        ["orion-4", "orion-6"],
+        ["orion-5", "orion-7"],
+        ["orion-2", "orion-4"],
+        ["orion-2", "orion-5"]
+      ]
+    },
+    {
+      "name": "cassiopeia",
+      "label": "Cassiopeia",
+      "stars": [
+        { "id": "cass-1", "x": 0.65, "y": 0.20, "size": 1.3 },
+        { "id": "cass-2", "x": 0.70, "y": 0.15, "size": 1.2 },
+        { "id": "cass-3", "x": 0.75, "y": 0.22, "size": 1.4 },
+        { "id": "cass-4", "x": 0.80, "y": 0.17, "size": 1.1 },
+        { "id": "cass-5", "x": 0.85, "y": 0.21, "size": 1.2 }
+      ],
+      "connections": [
+        ["cass-1", "cass-2"],
+        ["cass-2", "cass-3"],
+        ["cass-3", "cass-4"],
+        ["cass-4", "cass-5"]
+      ]
+    },
+    {
+      "name": "lyra",
+      "label": "Lyra",
+      "stars": [
+        { "id": "lyra-1", "x": 0.20, "y": 0.15, "size": 1.8 },
+        { "id": "lyra-2", "x": 0.17, "y": 0.25, "size": 1.0 },
+        { "id": "lyra-3", "x": 0.23, "y": 0.25, "size": 1.0 },
+        { "id": "lyra-4", "x": 0.16, "y": 0.32, "size": 1.1 },
+        { "id": "lyra-5", "x": 0.24, "y": 0.32, "size": 1.1 }
+      ],
+      "connections": [
+        ["lyra-1", "lyra-2"],
+        ["lyra-1", "lyra-3"],
+        ["lyra-2", "lyra-4"],
+        ["lyra-3", "lyra-5"],
+        ["lyra-4", "lyra-5"]
+      ]
+    }
+  ]
+}

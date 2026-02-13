@@ -1,0 +1,47 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('projects'))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<PageLayout title="Projects" description="Things I've built, from star charts to sound experiments">
+  <section class="py-16">
+    <h1 class="font-display text-4xl font-bold text-nebula-50 md:text-5xl">Projects</h1>
+    <p class="mt-4 max-w-2xl text-lg text-nebula-400">
+      Things I've built. Some useful. Some experimental. All interesting to me.
+    </p>
+  </section>
+
+  <section class="grid gap-6 pb-16 md:grid-cols-2">
+    {projects.map((project) => (
+      <a
+        href={`/projects/${project.id}`}
+        class="group rounded-xl border border-nebula-700/50 bg-nebula-900/50 p-6 transition-all hover:border-nebula-600 hover:bg-nebula-800/50"
+      >
+        <div class="mb-3 flex items-center justify-between">
+          <div class="flex flex-wrap gap-2">
+            {project.data.tags.map((tag) => (
+              <span class="rounded-full bg-nebula-800 px-2.5 py-0.5 text-xs text-nebula-400">
+                {tag}
+              </span>
+            ))}
+          </div>
+          <time class="text-xs text-nebula-500" datetime={project.data.date.toISOString()}>
+            {project.data.date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
+          </time>
+        </div>
+        <h2 class="font-display text-xl font-semibold text-nebula-100 transition-colors group-hover:text-star-blue">
+          {project.data.title}
+        </h2>
+        <p class="mt-2 text-sm text-nebula-400">{project.data.description}</p>
+        {project.data.featured && (
+          <span class="mt-4 inline-block rounded-full bg-star-gold/10 px-2.5 py-0.5 text-xs font-medium text-star-gold">
+            Featured
+          </span>
+        )}
+      </a>
+    ))}
+  </section>
+</PageLayout>

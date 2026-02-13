@@ -1,0 +1,114 @@
+---
+const currentPath = Astro.url.pathname;
+
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About' },
+  { href: '/projects', label: 'Projects' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/contact', label: 'Contact' },
+];
+---
+
+<nav class="fixed top-0 left-0 right-0 z-50 border-b border-nebula-700/50 bg-void/80 backdrop-blur-md">
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-[var(--spacing-page)] py-4">
+    <a href="/" class="font-display text-lg font-bold text-nebula-50 transition-colors hover:text-star-blue">
+      The Observatory
+    </a>
+
+    <!-- Desktop nav -->
+    <ul class="hidden items-center gap-8 md:flex" id="nav-links">
+      {links.map(({ href, label }) => (
+        <li>
+          <a
+            href={href}
+            class:list={[
+              'text-sm font-medium transition-colors',
+              currentPath === href
+                ? 'text-star-blue'
+                : 'text-nebula-400 hover:text-nebula-100',
+            ]}
+          >
+            {label}
+          </a>
+        </li>
+      ))}
+      <!-- Ship Log link - hidden until first discovery, injected by JS -->
+      <li id="ship-log-link" class="hidden">
+        <a
+          href="/ship-log"
+          class:list={[
+            'text-sm font-medium transition-colors',
+            currentPath === '/ship-log'
+              ? 'text-discovery'
+              : 'text-discovery/60 hover:text-discovery',
+          ]}
+        >
+          Ship Log
+        </a>
+      </li>
+    </ul>
+
+    <!-- Mobile menu button -->
+    <button
+      id="mobile-menu-btn"
+      class="flex items-center justify-center rounded-md p-2 text-nebula-400 transition-colors hover:text-nebula-100 md:hidden"
+      aria-label="Toggle menu"
+      aria-expanded="false"
+    >
+      <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="hidden border-t border-nebula-700/50 bg-void/95 backdrop-blur-md md:hidden">
+    <ul class="flex flex-col gap-1 px-[var(--spacing-page)] py-4">
+      {links.map(({ href, label }) => (
+        <li>
+          <a
+            href={href}
+            class:list={[
+              'block rounded-md px-3 py-2 text-sm font-medium transition-colors',
+              currentPath === href
+                ? 'bg-nebula-800 text-star-blue'
+                : 'text-nebula-400 hover:bg-nebula-800 hover:text-nebula-100',
+            ]}
+          >
+            {label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</nav>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+
+  btn?.addEventListener('click', () => {
+    const expanded = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!expanded));
+    menu?.classList.toggle('hidden');
+  });
+
+  // Show ship log link if discoveries exist
+  function checkShipLog() {
+    try {
+      const raw = localStorage.getItem('observatory:state');
+      if (raw) {
+        const state = JSON.parse(raw);
+        if (state.discoveries && state.discoveries.length > 0) {
+          document.getElementById('ship-log-link')?.classList.remove('hidden');
+        }
+      }
+    } catch {
+      // ignore parse errors
+    }
+  }
+
+  checkShipLog();
+  window.addEventListener('observatory:discovery', checkShipLog);
+</script>

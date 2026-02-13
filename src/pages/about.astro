@@ -1,0 +1,99 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import PhysicsText from '../components/hidden/PhysicsText.svelte';
+import WordTrigger from '../components/hidden/WordTrigger.svelte';
+import KnowledgeGate from '../components/hidden/KnowledgeGate.svelte';
+import DiscoveryReveal from '../components/hidden/DiscoveryReveal.svelte';
+---
+
+<PageLayout title="About" description="The story behind the person behind the screen">
+  <section class="py-16">
+    <h1 class="font-display text-4xl font-bold text-nebula-50 md:text-5xl">
+      <PhysicsText client:idle text="About Me" />
+    </h1>
+    <p class="mt-6 max-w-2xl text-lg text-nebula-400">
+      I'm a builder. I make things that help people see the world differently.
+    </p>
+  </section>
+
+  <section class="max-w-3xl py-8">
+    <div class="prose prose-invert max-w-none">
+      <p class="text-nebula-300">
+        I started coding because I wanted to make a <WordTrigger client:idle word="star chart" gameId="star-catcher" />. Not for anyone else. Just for myself.
+        I wanted to point my phone at the sky and know what I was looking at.
+      </p>
+      <p class="text-nebula-300">
+        That project led to others. A tool that turns radio data into <WordTrigger client:idle word="music" gameId="signal-decoder" />. A note app where ideas
+        orbit each other. An experiment that scatters text with <WordTrigger client:idle word="physics" gameId="gravity-hop" /> when you click on it.
+      </p>
+      <p class="text-nebula-300">
+        Every project starts the same way. A question I can't let go of. "What would it look
+        like if..." or "What would it sound like if..." Those questions are the engine.
+      </p>
+    </div>
+  </section>
+
+  <!-- Hidden content that appears after first star click -->
+  <KnowledgeGate client:idle requires={['star:first-click']}>
+    <section class="max-w-3xl py-4">
+      <p class="text-sm text-star-blue/70 italic">
+        You found the stars. There are patterns up there, if you look closely enough.
+      </p>
+    </section>
+  </KnowledgeGate>
+
+  <!-- Skills -->
+  <section class="py-12">
+    <h2 class="mb-6 font-display text-2xl font-bold text-nebula-100">What I Work With</h2>
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {[
+        { name: 'Frontend', items: ['TypeScript', 'Svelte', 'Astro', 'React', 'Tailwind CSS'] },
+        { name: 'Creative', items: ['Three.js', 'WebGL', 'Canvas API', 'Tone.js', 'Matter.js'] },
+        { name: 'Backend', items: ['Node.js', 'Python', 'PostgreSQL', 'Cloudflare Workers'] },
+      ].map(({ name, items }) => (
+        <div class="rounded-xl border border-nebula-700/50 bg-nebula-900/50 p-6">
+          <h3 class="mb-3 font-display text-sm font-semibold text-star-blue">{name}</h3>
+          <ul class="flex flex-wrap gap-2">
+            {items.map((item) => (
+              <li class="rounded-full bg-nebula-800 px-3 py-1 text-xs text-nebula-300">{item}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <section class="py-12">
+    <h2 class="mb-8 font-display text-2xl font-bold text-nebula-100">
+      <PhysicsText client:idle text="Timeline" />
+    </h2>
+    <div class="relative border-l border-nebula-700 pl-8">
+      {[
+        { year: '2025', title: 'Stellar Mapper', desc: 'Built a real-time satellite tracking star chart.' },
+        { year: '2025', title: 'Signal Weaver', desc: 'Turned radio telescope data into music.' },
+        { year: '2024', title: 'Started Freelancing', desc: 'Left my day job to build things full-time.' },
+        { year: '2023', title: 'First Open Source', desc: 'Published my first library. 200 stars in a week.' },
+        { year: '2022', title: 'Learned WebGL', desc: 'Fell down the shader rabbit hole. Never came back.' },
+      ].map(({ year, title, desc }) => (
+        <div class="relative mb-10 last:mb-0">
+          <div class="absolute -left-[2.55rem] top-1 h-3 w-3 rounded-full border-2 border-star-blue bg-void" />
+          <p class="font-mono text-xs text-star-blue">{year}</p>
+          <h3 class="mt-1 font-display text-lg font-semibold text-nebula-100">{title}</h3>
+          <p class="mt-1 text-sm text-nebula-400">{desc}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Hidden content after terminal discovery -->
+  <DiscoveryReveal client:idle discoveryId="terminal:opened">
+    <section class="max-w-3xl py-4">
+      <div class="rounded-lg border border-green-900/50 bg-green-950/30 p-4">
+        <p class="font-mono text-sm text-green-400">
+          > You found the terminal. Not many do. There's more to find.
+        </p>
+      </div>
+    </section>
+  </DiscoveryReveal>
+</PageLayout>

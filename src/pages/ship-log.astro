@@ -1,0 +1,22 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import ShipLogGraph from '../components/hidden/ShipLogGraph.svelte';
+import DeepGameLoader from '../components/games/DeepGameLoader.svelte';
+---
+
+<PageLayout title="Ship Log" description="A record of everything you've discovered">
+  <section class="py-16">
+    <h1 class="font-display text-4xl font-bold text-nebula-50 md:text-5xl">Ship Log</h1>
+    <p class="mt-4 max-w-2xl text-lg text-nebula-400">
+      A record of everything you've found. Connections form as you discover more.
+    </p>
+  </section>
+
+  <section class="pb-16">
+    <ShipLogGraph client:idle />
+  </section>
+
+  <section class="pb-16">
+    <DeepGameLoader client:idle />
+  </section>
+</PageLayout>

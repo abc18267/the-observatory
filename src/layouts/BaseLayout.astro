@@ -1,0 +1,72 @@
+---
+import '../styles/global.css';
+
+// Hidden layer components (hydrate independently as Svelte islands)
+import StarField from '../components/hidden/StarField.svelte';
+import HiddenTerminal from '../components/hidden/HiddenTerminal.svelte';
+import VisitMemory from '../components/hidden/VisitMemory.svelte';
+import TimeSensor from '../components/hidden/TimeSensor.svelte';
+import LoopWatcher from '../components/hidden/LoopWatcher.svelte';
+import CursorFlashlight from '../components/hidden/CursorFlashlight.svelte';
+import AmbientParticles from '../components/hidden/AmbientParticles.svelte';
+import AudioEngine from '../components/audio/AudioEngine.svelte';
+import AudioToggle from '../components/audio/AudioToggle.svelte';
+import MiniGameLoader from '../components/games/MiniGameLoader.svelte';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'A portfolio hiding an entire world of discovery.' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>{title} | The Observatory</title>
+  </head>
+  <body class="bg-void text-nebula-200 antialiased">
+    <!-- Hidden layer: background effects -->
+    <StarField client:idle />
+    <AmbientParticles client:idle />
+    <CursorFlashlight client:idle />
+
+    <!-- Hidden layer: invisible trackers -->
+    <VisitMemory client:load />
+    <TimeSensor client:load />
+    <LoopWatcher client:idle />
+
+    <!-- Hidden layer: interactive overlays -->
+    <HiddenTerminal client:idle />
+    <MiniGameLoader client:idle gameId="star-catcher" />
+    <MiniGameLoader client:idle gameId="signal-decoder" />
+    <MiniGameLoader client:idle gameId="gravity-hop" />
+    <MiniGameLoader client:idle gameId="nebula-painter" />
+
+    <!-- Audio system -->
+    <AudioEngine client:idle />
+
+    <!-- Audio toggle in top-right corner -->
+    <div class="fixed top-4 right-16 z-50 md:right-4">
+      <AudioToggle client:idle />
+    </div>
+
+    <!-- Page content -->
+    <slot />
+  </body>
+</html>
