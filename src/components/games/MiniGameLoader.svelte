@@ -39,6 +39,9 @@
   async function startGame() {
     isOpen = true;
 
+    // Notify audio engine and other listeners
+    window.dispatchEvent(new CustomEvent('observatory:game-start', { detail: { gameId } }));
+
     // Wait for the canvas to mount
     await new Promise((r) => requestAnimationFrame(r));
     await new Promise((r) => requestAnimationFrame(r));

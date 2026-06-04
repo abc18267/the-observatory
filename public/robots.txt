@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# The "hidden room" is intentionally undiscoverable — keep crawlers out.
+Disallow: /observatory/
+
+Sitemap: https://theobservatory.dev/sitemap-index.xml

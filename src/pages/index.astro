@@ -1,6 +1,7 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
 import WordTrigger from '../components/hidden/WordTrigger.svelte';
+import DiscoveryReveal from '../components/hidden/DiscoveryReveal.svelte';
 import { getCollection } from 'astro:content';
 
 const projects = (await getCollection('projects'))
@@ -16,7 +17,7 @@ const posts = (await getCollection('blog'))
 <PageLayout title="Home" description="A portfolio hiding an entire world of discovery">
   <!-- Hero -->
   <section class="py-16 md:py-24">
-    <p class="mb-4 font-mono text-sm text-star-blue">Hello, I'm</p>
+    <p class="mb-4 font-mono text-sm text-star-blue" id="hero-greeting">Hello, I'm</p>
     <h1 class="font-display text-4xl font-bold leading-tight text-nebula-50 md:text-6xl">
       An explorer who builds things.
     </h1>
@@ -90,4 +91,54 @@ const posts = (await getCollection('blog'))
       All posts &rarr;
     </a>
   </section>
+
+  <!-- Hidden PS after terminal discovery -->
+  <DiscoveryReveal client:idle discoveryId="terminal:opened">
+    <section class="max-w-3xl py-4">
+      <p class="text-sm text-star-green/60 italic">
+        PS: You found the terminal. This site has more layers than it looks.
+        Check the about page. Read the ship log. And maybe... scan for signals.
+      </p>
+    </section>
+  </DiscoveryReveal>
 </PageLayout>
+
+<script>
+  // Dynamic hero greeting based on visit count and time of day
+  function updateGreeting() {
+    const el = document.getElementById('hero-greeting');
+    if (!el) return;
+
+    let visitCount = 1;
+    try {
+      const raw = localStorage.getItem('observatory:state');
+      if (raw) {
+        const state = JSON.parse(raw);
+        visitCount = state.visitCount || 1;
+      }
+    } catch {
+      // ignore
+    }
+
+    const hour = new Date().getHours();
+    let timeGreeting = 'Hello';
+    if (hour >= 5 && hour < 12) timeGreeting = 'Good morning';
+    else if (hour >= 12 && hour < 18) timeGreeting = 'Good afternoon';
+    else if (hour >= 18 && hour < 22) timeGreeting = 'Good evening';
+    else timeGreeting = 'Late night?';
+
+    if (visitCount === 1) {
+      el.textContent = `${timeGreeting}. I'm`;
+    } else if (visitCount === 2) {
+      el.textContent = 'Welcome back. I\'m';
+    } else if (visitCount <= 5) {
+      el.textContent = `${timeGreeting} again. I'm`;
+    } else if (visitCount <= 10) {
+      el.textContent = 'You keep coming back. I\'m';
+    } else {
+      el.textContent = 'Hello, old friend. I\'m';
+    }
+  }
+
+  updateGreeting();
+</script>

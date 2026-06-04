@@ -1,0 +1,175 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+---
+
+<PageLayout title="Uses" description="The tools, software, and hardware I use to build things">
+  <section class="py-16">
+    <h1 class="font-display text-4xl font-bold text-nebula-50 md:text-5xl">Uses</h1>
+    <p class="mt-4 max-w-2xl text-lg text-nebula-400">
+      The tools I use every day. Updated when things change.
+    </p>
+  </section>
+
+  <section class="max-w-3xl space-y-12 pb-16">
+    <!-- Editor -->
+    <div>
+      <h2 class="mb-4 font-display text-xl font-semibold text-nebula-100">Editor</h2>
+      <ul class="space-y-3">
+        <li class="flex items-start gap-3">
+          <span class="mt-1 text-star-blue">&#9670;</span>
+          <div>
+            <p class="font-medium text-nebula-200">VS Code</p>
+            <p class="text-sm text-nebula-400">Main editor. Vim keybindings. Minimal UI. Dark theme always.</p>
+          </div>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="mt-1 text-star-blue">&#9670;</span>
+          <div>
+            <p class="font-medium text-nebula-200">Neovim</p>
+            <p class="text-sm text-nebula-400">For quick edits and server work. LazyVim config.</p>
+          </div>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="mt-1 text-star-blue">&#9670;</span>
+          <div>
+            <p class="font-medium text-nebula-200">JetBrains Mono</p>
+            <p class="text-sm text-nebula-400">Font of choice. Ligatures on. 14px. 1.6 line height.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Languages & Frameworks -->
+    <div>
+      <h2 class="mb-4 font-display text-xl font-semibold text-nebula-100">Languages & Frameworks</h2>
+      <ul class="space-y-3">
+        <li class="flex items-start gap-3">
+          <span class="mt-1 text-star-green">&#9670;</span>
+          <div>
+            <p class="font-medium text-nebula-200">TypeScript</p>
+            <p class="text-sm text-nebula-400">Strict mode. For everything. No plain JS anymore.</p>
+          </div>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="mt-1 text-star-green">&#9670;</span>
+          <div>
+            <p class="font-medium text-nebula-200">Astro</p>
+            <p class="text-sm text-nebula-400">Static sites and content-heavy projects. Islands architecture is perfect.</p>
+          </div>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="mt-1 text-star-green">&#9670;</span>
+          <div>
+            <p class="font-medium text-nebula-200">Svelte 5</p>
+            <p class="text-sm text-nebula-400">Interactive components. Runes are great. Less boilerplate than React.</p>
+          </div>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="mt-1 text-star-green">&#9670;</span>
+          <div>
+            <p class="font-medium text-nebula-200">Tailwind CSS v4</p>
+            <p class="text-sm text-nebula-400">CSS-first config. No more tailwind.config.js. Just CSS.</p>
+          </div>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="mt-1 text-star-green">&#9670;</span>
+          <div>
+            <p class="font-medium text-nebula-200">Python</p>
+            <p class="text-sm text-nebula-400">Data processing, scripts, and backend prototypes.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Creative Tools -->
+    <div>
+      <h2 class="mb-4 font-display text-xl font-semibold text-nebula-100">Creative Tools</h2>
+      <ul class="space-y-3">
+        <li class="flex items-start gap-3">
+          <span class="mt-1 text-star-pink">&#9670;</span>
+          <div>
+            <p class="font-medium text-nebula-200">Three.js</p>
+            <p class="text-sm text-nebula-400">WebGL. Starfields, particle systems, 3D visualizations.</p>
+          </div>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="mt-1 text-star-pink">&#9670;</span>
+          <div>
+            <p class="font-medium text-nebula-200">Tone.js</p>
+            <p class="text-sm text-nebula-400">Web audio synthesis. Generative music. Sound design.</p>
+          </div>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="mt-1 text-star-pink">&#9670;</span>
+          <div>
+            <p class="font-medium text-nebula-200">Matter.js</p>
+            <p class="text-sm text-nebula-400">2D physics for DOM elements. Text that falls, bounces, and stacks.</p>
+          </div>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="mt-1 text-star-pink">&#9670;</span>
+          <div>
+            <p class="font-medium text-nebula-200">Figma</p>
+            <p class="text-sm text-nebula-400">Design mockups and prototypes. Mostly for client work.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Services -->
+    <div>
+      <h2 class="mb-4 font-display text-xl font-semibold text-nebula-100">Services</h2>
+      <ul class="space-y-3">
+        <li class="flex items-start gap-3">
+          <span class="mt-1 text-star-gold">&#9670;</span>
+          <div>
+            <p class="font-medium text-nebula-200">Cloudflare Pages</p>
+            <p class="text-sm text-nebula-400">Hosting. Fast. Free tier is generous. Great DX.</p>
+          </div>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="mt-1 text-star-gold">&#9670;</span>
+          <div>
+            <p class="font-medium text-nebula-200">GitHub</p>
+            <p class="text-sm text-nebula-400">Code. Issues. Actions for CI/CD.</p>
+          </div>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="mt-1 text-star-gold">&#9670;</span>
+          <div>
+            <p class="font-medium text-nebula-200">Cloudflare Workers</p>
+            <p class="text-sm text-nebula-400">Edge functions when I need a server. KV for simple data.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Terminal -->
+    <div>
+      <h2 class="mb-4 font-display text-xl font-semibold text-nebula-100">Terminal</h2>
+      <ul class="space-y-3">
+        <li class="flex items-start gap-3">
+          <span class="mt-1 text-star-purple">&#9670;</span>
+          <div>
+            <p class="font-medium text-nebula-200">Kitty</p>
+            <p class="text-sm text-nebula-400">GPU-accelerated terminal. Fast and configurable.</p>
+          </div>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="mt-1 text-star-purple">&#9670;</span>
+          <div>
+            <p class="font-medium text-nebula-200">Fish Shell</p>
+            <p class="text-sm text-nebula-400">Autosuggestions and syntax highlighting out of the box.</p>
+          </div>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="mt-1 text-star-purple">&#9670;</span>
+          <div>
+            <p class="font-medium text-nebula-200">Starship Prompt</p>
+            <p class="text-sm text-nebula-400">Minimal. Shows git branch, node version, and nothing else.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+</PageLayout>

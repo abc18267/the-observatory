@@ -1,0 +1,117 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+---
+
+<PageLayout title="Signal Locked" description="You found it. The hidden room behind the portfolio.">
+  <section class="py-16">
+    <p class="mb-4 font-mono text-sm text-star-green">SIGNAL LOCKED // COORDINATES VERIFIED</p>
+    <h1 class="font-display text-4xl font-bold text-nebula-50 md:text-5xl">The Observatory</h1>
+    <p class="mt-4 max-w-2xl text-lg text-nebula-400">
+      You found it. This is the room behind the portfolio. The dev commentary track.
+    </p>
+  </section>
+
+  <section class="max-w-3xl space-y-8 pb-16">
+    <div class="rounded-xl border border-nebula-700/50 bg-nebula-900/50 p-6">
+      <h2 class="mb-4 font-display text-xl font-semibold text-nebula-100">Why This Exists</h2>
+      <div class="space-y-3 text-sm text-nebula-400">
+        <p>
+          I wanted to build a portfolio that wasn't just a portfolio. Most portfolio sites
+          are static showcases. You scroll. You read. You leave. I wanted something where
+          the act of exploring the site was itself a kind of project.
+        </p>
+        <p>
+          So I built two layers. The surface is clean and professional. It does the job.
+          The hidden layer is where the real experiments live. Stars you can click. Games
+          hidden in words. A terminal with secrets. A 22-minute time loop that subtly
+          shifts the atmosphere.
+        </p>
+        <p>
+          The idea came from Outer Wilds. That game uses a 22-minute loop as a core mechanic.
+          Everything resets, but your knowledge persists. I wanted the same feeling here.
+          Your discoveries are permanent. The site remembers you.
+        </p>
+      </div>
+    </div>
+
+    <div class="rounded-xl border border-nebula-700/50 bg-nebula-900/50 p-6">
+      <h2 class="mb-4 font-display text-xl font-semibold text-nebula-100">The Stack</h2>
+      <div class="space-y-3 text-sm text-nebula-400">
+        <p>
+          Astro handles the static shell. Svelte islands bring interactivity where it's needed.
+          Three.js renders the starfield. LittleJS powers the mini-games at under 7KB.
+          Tone.js generates ambient music. Matter.js makes text explode when you click it.
+        </p>
+        <p>
+          Everything heavy loads dynamically. The initial bundle stays under 200KB. Lighthouse
+          score stays above 90. The fancy stuff happens in the background, after the page
+          is already readable.
+        </p>
+        <p>
+          All state lives in localStorage. No accounts. No server. No tracking. Just a
+          key-value store that remembers what you found.
+        </p>
+      </div>
+    </div>
+
+    <div class="rounded-xl border border-nebula-700/50 bg-nebula-900/50 p-6">
+      <h2 class="mb-4 font-display text-xl font-semibold text-nebula-100">The Numbers</h2>
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div class="rounded-lg bg-nebula-800/50 p-4">
+          <p class="font-mono text-2xl font-bold text-star-blue" id="stat-discoveries">0</p>
+          <p class="text-xs text-nebula-500">Possible Discoveries</p>
+        </div>
+        <div class="rounded-lg bg-nebula-800/50 p-4">
+          <p class="font-mono text-2xl font-bold text-star-gold">4</p>
+          <p class="text-xs text-nebula-500">Hidden Games</p>
+        </div>
+        <div class="rounded-lg bg-nebula-800/50 p-4">
+          <p class="font-mono text-2xl font-bold text-star-pink">3</p>
+          <p class="text-xs text-nebula-500">Constellations</p>
+        </div>
+        <div class="rounded-lg bg-nebula-800/50 p-4">
+          <p class="font-mono text-2xl font-bold text-star-green">22</p>
+          <p class="text-xs text-nebula-500">Minute Loop</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="rounded-xl border border-star-gold/20 bg-star-gold/5 p-6">
+      <h2 class="mb-4 font-display text-xl font-semibold text-star-gold/90">A Secret for the Secret Finders</h2>
+      <p class="text-sm text-star-gold/60">
+        You got here through the terminal. You scanned the page, found the frequency,
+        and followed the coordinates. That takes curiosity. If you're building something
+        and want to add hidden layers like these, reach out. I love talking about
+        this stuff.
+      </p>
+    </div>
+  </section>
+</PageLayout>
+
+<script>
+  // Record the observatory discovery
+  try {
+    const raw = localStorage.getItem('observatory:state');
+    if (raw) {
+      const state = JSON.parse(raw);
+      if (!state.discoveries.includes('meta:observatory-found')) {
+        state.discoveries.push('meta:observatory-found');
+        localStorage.setItem('observatory:state', JSON.stringify(state));
+        window.dispatchEvent(
+          new CustomEvent('observatory:discovery', {
+            detail: { id: 'meta:observatory-found', category: 'meta', label: 'Found the Observatory' },
+          })
+        );
+      }
+    }
+  } catch {
+    // ignore
+  }
+
+  // Show total discovery count from knowledge graph
+  const statEl = document.getElementById('stat-discoveries');
+  if (statEl) {
+    // Hard-coded count that matches the knowledge graph nodes
+    statEl.textContent = '35+';
+  }
+</script>

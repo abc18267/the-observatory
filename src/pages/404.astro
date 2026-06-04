@@ -1,0 +1,91 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import PhysicsText from '../components/hidden/PhysicsText.svelte';
+import WordTrigger from '../components/hidden/WordTrigger.svelte';
+---
+
+<PageLayout title="404" description="You've drifted into the void">
+  <section class="flex min-h-[60vh] flex-col items-center justify-center py-16 text-center">
+    <pre class="mb-8 font-mono text-xs text-nebula-600 leading-tight select-none">{`
+        .  *  .    *     .  *
+   *  .    .   *    .        .
+      .  *     ____     *  .
+  *      .    /    \\      *
+    .  *     | 404  |  .    .
+  .      *    \\____/    *
+     *    .  *     .  *   .
+  .    *       .      *     .
+    `}</pre>
+
+    <h1 class="font-display text-4xl font-bold text-nebula-50 md:text-5xl">
+      <PhysicsText client:idle text="Lost in Space" />
+    </h1>
+
+    <p class="mt-6 max-w-md text-lg text-nebula-400">
+      You've drifted into the void. This page doesn't exist. But you can find your way back.
+    </p>
+
+    <div class="mt-8 flex flex-col items-center gap-4">
+      <div class="flex gap-4">
+        <a
+          href="/"
+          class="rounded-lg bg-star-blue/10 px-6 py-3 text-sm font-medium text-star-blue transition-colors hover:bg-star-blue/20"
+        >
+          Go Home
+        </a>
+        <a
+          href="/projects"
+          class="rounded-lg border border-nebula-600 px-6 py-3 text-sm font-medium text-nebula-300 transition-colors hover:border-nebula-500 hover:text-nebula-100"
+        >
+          View Projects
+        </a>
+      </div>
+
+      <p class="mt-4 text-sm text-nebula-500">
+        Or explore what's <WordTrigger client:idle word="hidden here" gameId="gravity-hop" />.
+      </p>
+    </div>
+
+    <div class="mt-12 max-w-sm">
+      <p class="text-xs text-nebula-600">Real pages that exist:</p>
+      <div class="mt-2 flex flex-wrap justify-center gap-2">
+        {[
+          { href: '/', label: 'Home' },
+          { href: '/about', label: 'About' },
+          { href: '/projects', label: 'Projects' },
+          { href: '/blog', label: 'Blog' },
+          { href: '/contact', label: 'Contact' },
+          { href: '/uses', label: 'Uses' },
+        ].map(({ href, label }) => (
+          <a
+            href={href}
+            class="rounded-full bg-nebula-800/50 px-3 py-1 text-xs text-nebula-400 transition-colors hover:bg-nebula-700 hover:text-nebula-200"
+          >
+            {label}
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</PageLayout>
+
+<script>
+  // Grant discovery for finding the 404 page
+  try {
+    const raw = localStorage.getItem('observatory:state');
+    if (raw) {
+      const state = JSON.parse(raw);
+      if (!state.discoveries.includes('meta:lost-explorer')) {
+        state.discoveries.push('meta:lost-explorer');
+        localStorage.setItem('observatory:state', JSON.stringify(state));
+        window.dispatchEvent(
+          new CustomEvent('observatory:discovery', {
+            detail: { id: 'meta:lost-explorer', category: 'meta', label: 'Found the 404 void' },
+          })
+        );
+      }
+    }
+  } catch {
+    // ignore
+  }
+</script>

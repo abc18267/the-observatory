@@ -13,6 +13,7 @@ export type ObservatoryEventMap = {
   'observatory:loop-reset': { loopCount: number };
   'observatory:audio-toggle': { enabled: boolean };
   'observatory:state-change': { discoveries: string[]; totalCount: number };
+  'observatory:game-start': { gameId: string };
 };
 
 export function emit<K extends keyof ObservatoryEventMap>(

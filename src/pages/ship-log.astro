@@ -12,6 +12,32 @@ import DeepGameLoader from '../components/games/DeepGameLoader.svelte';
     </p>
   </section>
 
+  <!-- Discovery Stats Panel -->
+  <section class="pb-8">
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-5" id="stats-panel">
+      <div class="rounded-xl border border-nebula-700/50 bg-nebula-900/50 p-4 text-center">
+        <p class="font-mono text-2xl font-bold text-star-blue" id="stat-total">0</p>
+        <p class="text-xs text-nebula-500">Discoveries</p>
+      </div>
+      <div class="rounded-xl border border-nebula-700/50 bg-nebula-900/50 p-4 text-center">
+        <p class="font-mono text-2xl font-bold text-star-gold" id="stat-games">0</p>
+        <p class="text-xs text-nebula-500">Games</p>
+      </div>
+      <div class="rounded-xl border border-nebula-700/50 bg-nebula-900/50 p-4 text-center">
+        <p class="font-mono text-2xl font-bold text-star-green" id="stat-commands">0</p>
+        <p class="text-xs text-nebula-500">Commands</p>
+      </div>
+      <div class="rounded-xl border border-nebula-700/50 bg-nebula-900/50 p-4 text-center">
+        <p class="font-mono text-2xl font-bold text-star-pink" id="stat-visits">0</p>
+        <p class="text-xs text-nebula-500">Visits</p>
+      </div>
+      <div class="rounded-xl border border-nebula-700/50 bg-nebula-900/50 p-4 text-center">
+        <p class="font-mono text-2xl font-bold text-star-purple" id="stat-loops">0</p>
+        <p class="text-xs text-nebula-500">Loops</p>
+      </div>
+    </div>
+  </section>
+
   <section class="pb-16">
     <ShipLogGraph client:idle />
   </section>
@@ -20,3 +46,30 @@ import DeepGameLoader from '../components/games/DeepGameLoader.svelte';
     <DeepGameLoader client:idle />
   </section>
 </PageLayout>
+
+<script>
+  function updateStats() {
+    try {
+      const raw = localStorage.getItem('observatory:state');
+      if (!raw) return;
+      const state = JSON.parse(raw);
+
+      const set = (id: string, val: number | string) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = String(val);
+      };
+
+      set('stat-total', state.discoveries?.length ?? 0);
+      set('stat-games', state.gamesCompleted?.length ?? 0);
+      set('stat-commands', state.terminalCommands?.length ?? 0);
+      set('stat-visits', state.visitCount ?? 0);
+      set('stat-loops', state.loopCount ?? 0);
+    } catch {
+      // ignore
+    }
+  }
+
+  updateStats();
+  window.addEventListener('observatory:discovery', updateStats);
+  window.addEventListener('observatory:state-change', updateStats);
+</script>

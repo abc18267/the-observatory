@@ -1,5 +1,6 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
+import DiscoveryReveal from '../components/hidden/DiscoveryReveal.svelte';
 ---
 
 <PageLayout title="Contact" description="Get in touch. I'd love to hear from you">
@@ -12,7 +13,13 @@ import PageLayout from '../layouts/PageLayout.astro';
 
   <div class="grid gap-12 pb-16 md:grid-cols-2">
     <!-- Contact Form -->
-    <form class="flex flex-col gap-6" action="#" method="POST">
+    <!--
+      TODO(owner): wire this form to a real submission endpoint. Options:
+        - A Cloudflare Pages Function / Worker that emails or stores the message.
+        - A hosted form service (Formspree, Web3Forms, etc.) via the `action` URL.
+      Until then it degrades gracefully to a mailto: handoff (see inline script below).
+    -->
+    <form id="contact-form" class="flex flex-col gap-6" action="mailto:hello@example.com" method="POST">
       <div>
         <label for="name" class="mb-2 block text-sm font-medium text-nebula-300">Name</label>
         <input
@@ -57,6 +64,7 @@ import PageLayout from '../layouts/PageLayout.astro';
     <!-- Links -->
     <div class="flex flex-col gap-6">
       <div class="rounded-xl border border-nebula-700/50 bg-nebula-900/50 p-6">
+        <!-- TODO(owner): replace placeholder social URLs and the email below with real values. -->
         <h2 class="mb-4 font-display text-lg font-semibold text-nebula-100">Find Me Online</h2>
         <ul class="flex flex-col gap-3">
           <li>
@@ -85,4 +93,35 @@ import PageLayout from '../layouts/PageLayout.astro';
       </div>
     </div>
   </div>
+
+  <script>
+    // Graceful fallback while no server endpoint exists: compose a mailto: draft
+    // from the form fields so a submission is never silently discarded.
+    // TODO(owner): replace with a real endpoint and remove this handler.
+    const form = document.getElementById('contact-form') as HTMLFormElement | null;
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const name = String(data.get('name') ?? '');
+      const email = String(data.get('email') ?? '');
+      const message = String(data.get('message') ?? '');
+      const subject = encodeURIComponent(`Message from ${name || 'a visitor'}`);
+      const body = encodeURIComponent(`${message}\n\n— ${name} (${email})`);
+      // TODO(owner): set the real contact address here.
+      window.location.href = `mailto:hello@example.com?subject=${subject}&body=${body}`;
+    });
+  </script>
+
+  <!-- Personal note for deep explorers -->
+  <DiscoveryReveal client:idle discoveryId="terminal:observer">
+    <section class="max-w-3xl pb-16">
+      <div class="rounded-lg border border-star-green/30 bg-star-green/5 p-4">
+        <p class="text-sm text-star-green/70">
+          You found the observer log. You're one of the few who look under the surface.
+          If you want to talk about hidden layers, interactive experiments, or creative
+          code, just mention "the observatory" in your message. I'll know what you mean.
+        </p>
+      </div>
+    </section>
+  </DiscoveryReveal>
 </PageLayout>

@@ -1,5 +1,6 @@
 ---
 import PageLayout from '../../layouts/PageLayout.astro';
+import DiscoveryReveal from '../../components/hidden/DiscoveryReveal.svelte';
 import { getCollection } from 'astro:content';
 
 const projects = (await getCollection('projects'))
@@ -44,4 +45,16 @@ const projects = (await getCollection('projects'))
       </a>
     ))}
   </section>
+
+  <!-- Secret project link after 10+ discoveries -->
+  <DiscoveryReveal client:idle discoveryId="terminal:opened">
+    <section class="pb-16" id="secret-projects">
+      <div class="rounded-xl border border-star-purple/30 bg-star-purple/5 p-6">
+        <p class="text-sm text-star-purple/70">
+          You're looking deeper than most. There's a project that isn't listed here.
+          This site itself. <a href="/projects/the-observatory" class="text-star-purple underline decoration-star-purple/30 hover:decoration-star-purple/60">Read about how it was built.</a>
+        </p>
+      </div>
+    </section>
+  </DiscoveryReveal>
 </PageLayout>

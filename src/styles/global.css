@@ -84,7 +84,43 @@ body {
   );
 }
 
-/* Discovery reveal animation */
+/* ===== Time-of-day theme shifts ===== */
+html.time-dawn {
+  --color-void: #0f0a0a;
+  --color-nebula-900: #17100d;
+}
+
+html.time-dawn body {
+  background-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    color-mix(in srgb, #f59e0b, transparent 97%) 100%
+  );
+}
+
+html.time-day {
+  --color-void: #0a0a0f;
+}
+
+html.time-dusk {
+  --color-void: #0f0a10;
+  --color-nebula-900: #150d17;
+}
+
+html.time-dusk body {
+  background-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    color-mix(in srgb, #a78bfa, transparent 97%) 100%
+  );
+}
+
+html.time-night {
+  --color-void: #050510;
+  --color-star-blue: #93c5fd;
+}
+
+/* ===== Discovery reveal animation ===== */
 @keyframes discover {
   from {
     opacity: 0;
@@ -102,7 +138,24 @@ body {
   animation: discover 0.6s var(--ease-out-expo) forwards;
 }
 
-/* Subtle link glow for word triggers */
+/* ===== Loop reset animation ===== */
+@keyframes loop-pulse {
+  0% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.3);
+  }
+  100% {
+    filter: brightness(1);
+  }
+}
+
+.loop-reset {
+  animation: loop-pulse 2s var(--ease-in-out-sine);
+}
+
+/* ===== Subtle link glow for word triggers ===== */
 .word-trigger {
   cursor: default;
   transition: text-shadow 0.3s ease;
@@ -110,4 +163,61 @@ body {
 
 .word-trigger:hover {
   text-shadow: 0 0 8px color-mix(in srgb, var(--color-signal), transparent 60%);
+}
+
+/* ===== Discovery stage classes ===== */
+body.stage-novice {
+  /* Default state, no extra styles */
+}
+
+body.stage-explorer .word-trigger {
+  text-shadow: 0 0 4px color-mix(in srgb, var(--color-signal), transparent 80%);
+}
+
+body.stage-seeker .word-trigger {
+  text-shadow: 0 0 6px color-mix(in srgb, var(--color-discovery), transparent 70%);
+}
+
+body.stage-seeker ::selection {
+  background-color: color-mix(in srgb, var(--color-star-gold), transparent 70%);
+}
+
+/* ===== Visit frequency styles ===== */
+body.visit-frequent .discovery-reveal {
+  animation-duration: 0.4s;
+}
+
+body.visit-resident .discovery-reveal {
+  animation-duration: 0.3s;
+}
+
+/* ===== Skip link (keyboard / screen-reader bypass, WCAG 2.4.1) ===== */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  z-index: 100;
+}
+.skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+  padding: 0.625rem 1.25rem;
+  background: #0b1020;
+  color: #bcd3ff;
+  font-weight: 600;
+  border: 2px solid #bcd3ff;
+  border-radius: 0.375rem;
+  text-decoration: none;
+}
+
+/* ===== Reduced motion (WCAG 2.3.3): honor OS "reduce motion" for CSS animation ===== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }

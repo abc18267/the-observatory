@@ -9,6 +9,7 @@ import TimeSensor from '../components/hidden/TimeSensor.svelte';
 import LoopWatcher from '../components/hidden/LoopWatcher.svelte';
 import CursorFlashlight from '../components/hidden/CursorFlashlight.svelte';
 import AmbientParticles from '../components/hidden/AmbientParticles.svelte';
+import ScrollWatcher from '../components/hidden/ScrollWatcher.svelte';
 import AudioEngine from '../components/audio/AudioEngine.svelte';
 import AudioToggle from '../components/audio/AudioToggle.svelte';
 import MiniGameLoader from '../components/games/MiniGameLoader.svelte';
@@ -19,6 +20,8 @@ interface Props {
 }
 
 const { title, description = 'A portfolio hiding an entire world of discovery.' } = Astro.props;
+const fullTitle = `${title} | The Observatory`;
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? 'https://theobservatory.dev');
 ---
 
 <!doctype html>
@@ -29,6 +32,19 @@ const { title, description = 'A portfolio hiding an entire world of discovery.' 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
+    <link rel="canonical" href={canonicalUrl.href} />
+
+    <!-- OpenGraph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl.href} />
+    <meta property="og:site_name" content="The Observatory" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -38,9 +54,11 @@ const { title, description = 'A portfolio hiding an entire world of discovery.' 
       rel="stylesheet"
     />
 
-    <title>{title} | The Observatory</title>
+    <title>{fullTitle}</title>
   </head>
   <body class="bg-void text-nebula-200 antialiased">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     <!-- Hidden layer: background effects -->
     <StarField client:idle />
     <AmbientParticles client:idle />
@@ -50,6 +68,7 @@ const { title, description = 'A portfolio hiding an entire world of discovery.' 
     <VisitMemory client:load />
     <TimeSensor client:load />
     <LoopWatcher client:idle />
+    <ScrollWatcher client:idle />
 
     <!-- Hidden layer: interactive overlays -->
     <HiddenTerminal client:idle />
